@@ -1,0 +1,62 @@
+[Currency Format]
+Based on the currency notation in the Source sentence, revise the Translated sentence by choosing exactly one of the rules written below:
+1. Currency Symbol Format
+2. Currency Code Format
+3. Currency Name Format
+Always apply the [Exceptions] and [ALPHA RULE] first.
+
+[ALPHA RULE]
+- Preserve the notation type from the Source (do NOT convert symbol↔code↔name).
+
+---
+1. Currency Symbol Format
+Evaluation Criteria: 
+- The currency symbol must appear immediately before the number (no space between symbol and digits).
+- The original symbol must be preserved from the source sentence.
+- There must be no space between the curreny symbol and the number.
+
+Expected currency symbols include: NT$, $, ¢, €, ¥, £, ₩, ₹, ₽, ₺, ฿, ₱, ₡, ₨, ₦, ₫, ₭, ₲, ₵, ₿, ¤, ƒ, ₮, ₪, ₴, ﷼, ₸, ₾
+
+Examples:  
+- ₩12,345.00  
+- $12,345.00  
+- €1,000.00
+- ¥8,000
+
+---
+2. Currency Code Format
+Evaluation Criteria: 
+- The code appears before the number. 
+- Use a space between the code and the number. 
+- The currency code from the source sentence must be preserved.
+
+Expected currency codes include: USD, EUR, KRW, JPY, CNY, GBP, INR, RUB, TRY(abbreviation: TL), AUD, CAD, CHF, MXN, BRL, PLN, SEK, NOK, DKK, CZK, HUF, ILS, SAR, AED, SGD, HKD, TWD, THB, MYR, IDR, PHP, VND, ZAR, UAH, NZD
+
+Example:  
+- KRW 12,345.00
+- JPY 3,000 
+- USD 21
+
+---
+3. Currency Name Format
+Evaluation Criteria: 
+- The currency name must follow the correct spacing rule based on the number form (digit vs. spelled-out). 
+- Apply appropriate spacing based on number form. 
+  - If the amount is written using digit, the currency name must be attached without a space. 
+  - If the amount is written using spelled-out numbers, the currency name must be separated by a space.
+
+Examples:
+- 30,000원
+- 100위안
+- 3천만 달러
+- 2백만 유로
+
+---
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the original sentence before making changes.

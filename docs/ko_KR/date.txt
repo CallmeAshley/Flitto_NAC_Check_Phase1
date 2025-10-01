@@ -1,0 +1,22 @@
+[Date Format]
+In Korean, dates are typically written in the order of year + month + day.  
+Including the weekday is optional.
+Including the year is optional.
+
+Examples: 
+- 2023년 10월 22일 화요일 
+- 1990년 1월 1일 
+- 5월 3일 
+- 5월 6일 금요일
+- 9/27 
+- 2025. 03. 22
+- 2025/2/10
+
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the original sentence before making changes.

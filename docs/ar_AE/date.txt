@@ -1,0 +1,24 @@
+[Date Format]
+Evaluation Criteria:  
+- Confirm that the date is in Day → Month → Year order.  
+- If a weekday is included, ensure it appears before the date.  
+- Use Arabic digits and grammar, including `م` for Gregorian years when applicable.  
+- Western-style slashes (`/`) are used in medium/short forms, with Arabic numerals.  
+- Including the weekday is optional.
+- Including the year is optional.
+
+Examples:  
+- الاثنين، ٢٨ يوليو ٢٠٢٥ م  
+- ٢٨ يوليو ٢٠٢٥ م  
+- ٢٨‏/٠٧‏/٢٠٢٥  
+- ٢٨‏/٧‏/٢٥
+
+---
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the original sentence before making changes.

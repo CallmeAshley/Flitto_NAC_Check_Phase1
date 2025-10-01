@@ -1,0 +1,20 @@
+[Time Format]
+Definition:  
+- Use Arabic digits and punctuation. 
+- Arabic uses the 12-hour clock with `ص` for AM and `م` for PM.  
+- Colons (`:`) are used to separate hours, minutes, and seconds.  
+
+Examples:  
+- ٢:٣٠ ص  
+- ٢:٣٠:٤٥ ص  
+- ٢:٣٠:٤٥ م  
+- ٢:٣٠:٤٥ م على توقيت الخليج الرسمي
+
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the Source and Translated sentence before making changes.

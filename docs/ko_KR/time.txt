@@ -1,0 +1,17 @@
+[Time Format]
+Evaluation Criteria:  
+- In 12-hour format, include 오전 or 오후 before the hour.  
+- In 24-hour format, use colons (`:`).
+
+Examples:  
+- 오전 9시 30분, 오후 2시  
+- 09:30, 14:00  
+
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the Source and Translated sentence before making changes.

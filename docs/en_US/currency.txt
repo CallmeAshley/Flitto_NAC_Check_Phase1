@@ -1,0 +1,60 @@
+[Currency Format]
+Based on the currency notation in the Source sentence, revise the Translated sentence by choosing exactly one of the rules written below:
+1. Currency Symbol Format
+2. Currency Code Format
+3. Currency Name Format
+Always apply the [Exceptions] and [ALPHA RULE] first.
+
+[ALPHA RULE]
+- Preserve the notation type from the Source (do NOT convert symbol↔code↔name).
+
+---
+1. Currency Symbol Format
+Evaluation Criteria:  
+- The symbol must be placed directly before the number.  
+- There must be no space between the curreny symbol and the number.
+- Preserve the original symbol from the source sentence.
+
+Expected currency symbols include: NT$, $, ¢, €, ¥, £, ₩, ₹, ₽, ₺, ฿, ₱, ₡, ₨, ₦, ₫, ₭, ₲, ₵, ₿, ¤, ƒ, ₮, ₪, ₴, ﷼, ₸, ₾
+
+Examples:  
+- $1,234.56  
+- €2,000.00  
+- £850.00  
+- ¥10,000
+
+---
+2. Currency Code Format
+Evaluation Criteria:  
+- The currency code must follow the number with a space.  
+- The currency code from the source sentence must be preserved.
+
+Expected currency codes include: USD, EUR, KRW, JPY, CNY, GBP, INR, RUB, TRY(abbreviation: TL), AUD, CAD, CHF, MXN, BRL, PLN, SEK, NOK, DKK, CZK, HUF, ILS, SAR, AED, SGD, HKD, TWD, THB, MYR, IDR, PHP, VND, ZAR, UAH, NZD
+
+Examples:  
+- 1,234.56 USD  
+- 2,000 EUR  
+- 850 JPY
+
+---
+3. Currency Name Format
+Evaluation Criteria:  
+- The currency name must follow the number with a space.  
+
+Examples:  
+- 1,000 dollars  
+- 3k dollars
+- 500 rupees
+- 1M dollars
+- 300 pounds  
+- 1,200 won
+
+---
+[Exceptions]
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the original sentence before making changes.

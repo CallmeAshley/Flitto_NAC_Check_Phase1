@@ -1,0 +1,21 @@
+[Time Format]
+Evaluation Criteria:
+- French uses the 24-hour clock in all written contexts.  
+- There is no AM/PM indicator.  
+- Both colon format (`14:30`) and 'h' format (`14h30`, `16h00`) are acceptable in French.
+
+Examples:  
+- 16h00  
+- 14h30  
+- 22:15
+
+[Exceptions]
+-For duration expressions, such as "1 hour 30 minutes", do not convert to clock-based time formats like 01:30.
+Instead, retain natural French expressions such as 1h30 or 1 heure 30 minutes depending on register.
+- Do not apply the formatting rules to numbers that are part of:
+  - telephone numbers
+  - addresses
+  - identification codes
+  - or clearly unordered lists of numbers with no separators
+- If the numbers or formats (e.g., 10:00, 12/31, $15) appear to be part of such non-linguistic constructs based on the sentence context, do not apply localization guidelines.
+- Always consider the context of the Source and Translated sentence before making changes.

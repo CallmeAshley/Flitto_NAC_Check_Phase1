@@ -1,0 +1,13 @@
+# 환경 설정
+.env
+
+# data 
+data/
+
+utils/__pycache__/
+
+docs.zip
+
+escape_check.py
+
+GH.zip 
