@@ -12,9 +12,9 @@ Always apply the [Exceptions] and [ALPHA RULE] first.
 
 1. Currency Symbol Format
 Evaluation Criteria:  
-- The currency symbol comes after the number.  
-- A space is used between the number and currency symbol.  
-- Use Arabic digits
+- The currency symbol comes after the number in the Translated sentence.  
+- A space is used between the number and currency symbol in the Translated sentence.  
+- Use Arabic digits in the Translated sentence
 
 Expected currency symbols include: NT$, $, ¢, €, ¥, £, ₩, ₹, ₽, ₺, ฿, ₱, ₡, ₨, ₦, ₫, ₭, ₲, ₵, ₿, ¤, ƒ, ₮, ₪, ₴, ﷼, ₸, ₾
 
@@ -26,9 +26,9 @@ Examples:
 ---
 2. Currency Code Format
 Evaluation Criteria:  
-- Currency Code must follow the number.  
-- Use a space between number and currecny code.  
-- Follow Arabic number formatting.  
+- Currency Code must follow the number in the Translated sentence.  
+- Use a space between number and currecny code in the Translated sentence.  
+- Follow Arabic number formatting in the Translated sentence.  
 
 Expected currency codes include: USD, EUR, KRW, JPY, CNY, GBP, INR, RUB, TRY(abbreviation: TL), AUD, CAD, CHF, MXN, BRL, PLN, SEK, NOK, DKK, CZK, HUF, ILS, SAR, AED, SGD, HKD, TWD, THB, MYR, IDR, PHP, VND, ZAR, UAH, NZD
 
@@ -40,9 +40,9 @@ Examples:
 ---
 3. Currency Name Format
 Evaluation Criteria:  
-- Currency name must appear after the number, with a space.  
-- Number format and digit style must follow Arabic conventions.  
-- Do not use Western digits or punctuation.  
+- Currency name must appear after the number, with a space in the Translated sentence.  
+- Number format and digit style must follow Arabic conventions in the Translated sentence.  
+- Do not use Western digits or punctuation in the Translated sentence.  
 
 Examples:  
 - ١٬٠٠٠ درهم  

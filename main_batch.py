@@ -9,17 +9,19 @@ from graph.file_graph import build_file_graph
 
 # ================== Settings ==================
 INPUT_DIR = "/mnt/c/Users/Flitto/Documents/NAC/LLM검수/Advanced_async_batch/data/input2_json"
-OUTPUT_DIR = "/mnt/c/Users/Flitto/Documents/NAC/LLM검수/LCT_check_phase1/data/output_final"
+OUTPUT_DIR = "/mnt/c/Users/Flitto/Documents/NAC/LLM검수/LCT_check_phase1/data/시연"
 os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 TARGET_SUBFOLDERS = [
     "NAC_3175_en-ko_HTL_7956_250313_170837_DONE",
+    # "input_en-ko",
+    # "NAC_2425_ko-en_HTL_405_250318_172641",
     # "NAC_2433_fr-en_HTL_389_250318_172605",
     # "NAC_2435_ar-en_HTL_412_250318_172556",
     # "NAC_3167_en-uk_HTL_7956_250313_174738_DONE",
 ]
 
-MAX_FILES_PER_FOLDER: Optional[int] = 6  # None이면 제한 없음
+MAX_FILES_PER_FOLDER: Optional[int] = None  # None이면 제한 없음
 
 # Concurrency / retry (line-level은 file_graph 내부에서 사용)
 # CONCURRENCY_LINES = 1
@@ -34,7 +36,7 @@ MAX_RETRIES = 10
 def _natural_sort_key(path: str) -> int:
     """파일명 내 첫 숫자를 기준으로 정렬, 숫자가 없으면 매우 큰 값으로 뒤로."""
     base = os.path.basename(path)
-    m = re.search(r"\d+", base)
+    m = re.search(r"/d+", base)
     return int(m.group()) if m else 10**12
 
 

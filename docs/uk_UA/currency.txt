@@ -11,8 +11,8 @@ Always apply the [Exceptions] and [ALPHA RULE] first.
 ---
 1. Currency Symbol Format
 Evaluation Criteria:
-- Currency symbol must follow the number.
-- Use a space between number and currency symbol.
+- Currency symbol must follow the number in the Translated sentence.
+- Use a space between number and currency symbol in the Translated sentence.
 
 Expected currency symbols include: NT$, $, ¢, €, ¥, £, ₩, ₹, ₽, ₺, ฿, ₱, ₡, ₨, ₦, ₫, ₭, ₲, ₵, ₿, ¤, ƒ, ₮, ₪, ₴, ﷼, ₸, ₾
 
@@ -25,7 +25,7 @@ Examples:
 ---
 2. Currency Code Format
 Evaluation Criteria:
-- Currency code appears after the number, separated by a space.
+- Currency code appears after the number, separated by a space in the Translated sentence.
 
 Expected currency codes include: USD, EUR, KRW, JPY, CNY, GBP, INR, RUB, TRY(abbreviation: TL), AUD, CAD, CHF, MXN, BRL, PLN, SEK, NOK, DKK, CZK, HUF, ILS, SAR, AED, SGD, HKD, TWD, THB, MYR, IDR, PHP, VND, ZAR, UAH, NZD
 
@@ -37,8 +37,8 @@ Examples:
 ---
 3. Currency Name Format
 Evaluation Criteria:
-- Name must appear after the number with a space.
-- Use correct declension based on quantity.
+- Name must appear after the number with a space in the Translated sentence.
+- Use correct declension based on quantity in the Translated sentence.
 
 Examples:  
 - 1 000 гривень  

@@ -11,7 +11,7 @@ from prompt_builder.build_prompt import (
     build_missing_check_prompt,
     build_addition_check_prompt,
 )
-from utils.gpt_client import ask_gpt5_async
+from utils.gpt_client import ask_gpt5_async, ask_gpt4o_async
 from utils.helper import b, llist, normalize_gpt_json
 
 _ERROR_LOG_LOCK = Lock()
@@ -111,7 +111,7 @@ class LoadFileNode:
     """Load JSON into FileState"""
     def __call__(self, s: FileState) -> FileState:
         st = s.copy()
-        with open(st["input_path"], "r", encoding="utf-8") as f:
+        with open(st["input_path"], "r", encoding="utf-8-sig") as f:
             data = json.load(f)
         st["source"] = data.get("source")
         st["target"] = data.get("target")
@@ -163,10 +163,10 @@ class MapLinesNode:
 
 
 class MissingCheckNode:
-    """Document-level missing content check"""
     async def __call__(self, s: FileState) -> FileState:
         st = s.copy()
-        st["final_doc"] = st.get("format_checked_text", "\n".join(st["format_checked_lines"]))
+        st["final_doc"] = st.get("format_checked_text", "\n".join(st.get("format_checked_lines", [])))
+
         if st["text"] and st["final_doc"]:
             sys2, usr2 = build_missing_check_prompt(st["text"], st["final_doc"])
             res, _ = await _safe_ask(
@@ -175,16 +175,39 @@ class MissingCheckNode:
                 stage="missing_check", state_for_log=st
             )
             js = normalize_gpt_json(res) if res != "error" else {}
+            
+            if len(js['suggestions']) > 1: 
+                temp = ''
+                for sug in js['suggestions']:
+                    if isinstance(sug, str) and sug.strip():
+                        temp += sug.strip()
+                        temp += '\n'
+                js['suggestions'] = [temp.strip()]
+                
             st["res_missing"] = js or {"missing_content": False, "suggestions": []}
-            # first valid suggestion, if any
-            suggestion = None
-            sugs = js.get("suggestions") if js else None
-            if isinstance(sugs, list):
-                for v in sugs:
-                    if isinstance(v, str) and v.strip():
-                        suggestion = v.strip(); break
+
+            suggestion = js.get("suggestions") if js['suggestions'] else None
+            # sugs = js.get("suggestions") if js else None
+            # if isinstance(sugs, list):
+            #     for v in sugs:
+            #         if isinstance(v, str) and v.strip():
+            #             suggestion = v.strip()
+            #             break
+
             if suggestion:
-                st["final_doc"] = suggestion
+                expected = len((st.get("format_checked_text") or "").splitlines()) or 1
+                suggested = suggestion[0].count("\n") + 1
+                if suggested == expected:
+                    st["final_doc"] = suggestion[0].rstrip("\n")
+                else:
+                    _log_error_file(
+                        st,
+                        stage="missing_check_line_count_mismatch",
+                        error_type="LineCountMismatch",
+                        error_message=f"expected={expected}, suggested={suggested}"
+                    )
+            else:
+                st["res_missing"] = {"missing_content": False, "suggestions": []}
         else:
             st["res_missing"] = {"missing_content": False, "suggestions": []}
         return st
@@ -201,22 +224,44 @@ class AdditionCheckNode:
                 model="gpt-5", timeout=st["API_TIMEOUT_SEC"], max_retries=st["MAX_RETRIES"],
                 stage="addition_check", state_for_log=st
             )
+            
             js = normalize_gpt_json(res) if res != "error" else {}
+            
+            
+            if len(js['suggestions']) > 1: 
+                temp = ''
+                for sug in js['suggestions']:
+                    if isinstance(sug, str) and sug.strip():
+                        temp += sug.strip()
+                        temp += '\n'
+                js['suggestions'] = [temp.strip()]
+    
             st["res_addition"] = js or {"faithfulness_issue": False, "suggestions": []}
-            n_lines = len(st.get("format_checked_text", "").splitlines()) or 1
-            suggested = None
-            sugs = js.get("suggestions") if js else None
-            if isinstance(sugs, list):
-                for v in sugs:
-                    if isinstance(v, str) and v.strip():
-                        suggested = v.strip(); break
-            if isinstance(suggested, str) and (suggested.count("\n") + 1 == n_lines):
-                st["final_checked_joined"] = suggested.rstrip("\n")
+            
+            
+            n_lines = len(st.get("text", "").splitlines()) or 1
+            suggested = js.get("suggestions") if js['suggestions'] else None
+
+
+            if suggested:
+                if (suggested[0].count("\n") + 1 == n_lines):
+                    st["final_checked_joined"] = suggested[0].rstrip("\n")
+                    
+                else:
+                    _log_error_file(
+                        st,
+                        stage="addition_check_line_count_mismatch",
+                        error_type="LineCountMismatch",
+                        error_message=f"expected={n_lines}, suggested={suggested[0].count("\n") + 1}"
+                    )
+                    st["final_checked_joined"] = st["final_doc"].rstrip("\n")
             else:
                 st["final_checked_joined"] = st["final_doc"].rstrip("\n")
+                
         else:
             st["res_addition"] = {"faithfulness_issue": False, "suggestions": []}
             st["final_checked_joined"] = (st.get("final_doc") or st.get("format_checked_text") or "").rstrip("\n")
+            
         return st
 
 

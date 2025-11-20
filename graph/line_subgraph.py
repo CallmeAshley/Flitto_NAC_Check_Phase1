@@ -11,7 +11,7 @@ from prompt_builder.build_prompt import (
     build_check_prompt,
     build_emoji_check_prompt,
 )
-from utils.helper import b, llist, normalize_gpt_json, norm, has_emoji
+from utils.helper import b, llist, normalize_gpt_json, norm, has_emoji, normalize_gpt_json_cat
 
 _ERROR_LOG_LOCK = Lock()
 
@@ -108,6 +108,8 @@ class LineState(TypedDict, total=False):
     failures: List[str]
 
 
+from typing import List
+
 class DetectCategoryNode:
     def __init__(self, api_timeout: int, max_retries: int):
         self.timeout = api_timeout
@@ -119,8 +121,10 @@ class DetectCategoryNode:
         s["revised_fmt"] = s.get("trn_line", "")
 
         # 숫자가 하나도 없다면 카테고리 검출 생략
-        if not any(ch.isdigit() for ch in (s["src_line"] or "")) and not any(ch.isdigit() for ch in (s["trn_line"] or "")):
+        if not any(ch.isdigit() for ch in (s.get("src_line") or "")) and not any(ch.isdigit() for ch in (s.get("trn_line") or "")):
             s["detected_categories"] = []
+            s["violated_categories"] = []
+            s["spans_by_category"] = {}
             return s
 
         sys_cat, usr_cat = build_category_prompt(s["revised_fmt"])
@@ -133,19 +137,32 @@ class DetectCategoryNode:
             line_no=(s.get("i", -1) + 1),
             category=None,
         )
+        
+        res = normalize_gpt_json_cat(res)
+        
         cats: List[str] = []
         if res != "error":
             if isinstance(res, str):
                 cats = [res]
             elif isinstance(res, list):
                 cats = [c for c in res if isinstance(c, str)]
-        s["detected_categories"] = cats
+
+        # 중복 제거(입력 순서 보존)
+        seen = set()
+        uniq = []
+        for c in cats:
+            cc = c.strip()
+            if cc and cc not in seen:
+                seen.add(cc)
+                uniq.append(cc)
+
+        s["detected_categories"] = uniq
         s["violated_categories"] = []
         s["spans_by_category"] = {}
         return s
 
 
-class FormatCheckLoopNode:
+class FormatCheckLoopNode: ##### 가이드라인 가져와서 여러 개 어떻게 체크하고 수정문 잘 안 들어가는 이유 확인하기     
     def __init__(self, api_timeout: int, max_retries: int, get_guideline):
         self.timeout = api_timeout
         self.max_retries = max_retries
@@ -161,8 +178,8 @@ class FormatCheckLoopNode:
             before = s["revised_fmt"]
             sys_chk, usr_chk = build_check_prompt(before, guideline, s["src_line"])
             res, _ = await safe_ask(
-                ask_gpt5_async, [sys_chk, usr_chk],
-                model='gpt-5',
+                ask_gpt4o_async, [sys_chk, usr_chk],
+                model='gpt-4o',
                 timeout=self.timeout, max_retries=self.max_retries,
                 stage="format_check",
                 state_for_log=s,
@@ -179,8 +196,6 @@ class FormatCheckLoopNode:
                     tmp_src_sp = llist(js.get("source_spans"))
                     tmp_trn_sp = llist(js.get("trans_spans"))
                     tmp_rev_sp = llist(js.get("revised_spans"))
-                elif isinstance(res, str):
-                    s["revised_fmt"] = res.strip()
 
             if norm(s["revised_fmt"]) != norm(before):
                 s["violated_categories"].append(cat)
@@ -215,21 +230,27 @@ class EmojiCheckNode:
             category=None,
         )
         js = normalize_gpt_json(res) if res != "error" else {}
-        suggestion = None
-        sugs = js.get("suggestions")
-        if isinstance(sugs, list):
-            for v in sugs:
-                if isinstance(v, str) and v.strip():
-                    suggestion = v.strip(); break
+        
+        
+        if len(js['suggestions']) > 1: 
+            temp = ''
+            for sug in js['suggestions']:
+                if isinstance(sug, str) and sug.strip():
+                    temp += sug.strip()
+                    temp += '\n'
+            js['suggestions'] = [temp.strip()]
+        
         emoji_issue = b(js.get("emoji_issue"), False)
-        if emoji_issue or (suggestion and suggestion != cur):
+        
+        
+        if emoji_issue:
             s["emoji_issue_item"] = {
                 "line_no": s["i"] + 1,
                 "source_line": src,
                 "trans_line": cur,
-                "suggestion": suggestion or cur
+                "suggestion": js['suggestions'][0] or cur
             }
-            s["revised_fmt"] = suggestion or cur
+            s["revised_fmt"] = js['suggestions'][0] or cur
         return s
 
 

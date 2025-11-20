@@ -11,9 +11,9 @@ Always apply the [Exceptions] and [ALPHA RULE] first.
 ---
 1. Currency Symbol Format
 Evaluation Criteria: 
-- The currency symbol must appear immediately before the number (no space between symbol and digits).
+- The currency symbol must appear immediately before the number (no space between symbol and digits) in the Translated sentence.
 - The original symbol must be preserved from the source sentence.
-- There must be no space between the curreny symbol and the number.
+- There must be no space between the curreny symbol and the number in the Translated sentence.
 
 Expected currency symbols include: NT$, $, ¢, €, ¥, £, ₩, ₹, ₽, ₺, ฿, ₱, ₡, ₨, ₦, ₫, ₭, ₲, ₵, ₿, ¤, ƒ, ₮, ₪, ₴, ﷼, ₸, ₾
 
@@ -26,8 +26,8 @@ Examples:
 ---
 2. Currency Code Format
 Evaluation Criteria: 
-- The code appears before the number. 
-- Use a space between the code and the number. 
+- The code must appear before the number in the Translated sentence. 
+- Use a space between the code and the number in the Translated sentence. 
 - The currency code from the source sentence must be preserved.
 
 Expected currency codes include: USD, EUR, KRW, JPY, CNY, GBP, INR, RUB, TRY(abbreviation: TL), AUD, CAD, CHF, MXN, BRL, PLN, SEK, NOK, DKK, CZK, HUF, ILS, SAR, AED, SGD, HKD, TWD, THB, MYR, IDR, PHP, VND, ZAR, UAH, NZD
@@ -40,10 +40,10 @@ Example:
 ---
 3. Currency Name Format
 Evaluation Criteria: 
-- The currency name must follow the correct spacing rule based on the number form (digit vs. spelled-out). 
+- The currency name must follow the correct spacing rule based on the number form (digit vs. spelled-out) in the Translated sentence. 
 - Apply appropriate spacing based on number form. 
-  - If the amount is written using digit, the currency name must be attached without a space. 
-  - If the amount is written using spelled-out numbers, the currency name must be separated by a space.
+  - If the amount is written using digit, the currency name must be attached without a space in the Translated sentence. 
+  - If the amount is written using spelled-out numbers, the currency name must be separated by a space in the Translated sentence.
 
 Examples:
 - 30,000원
